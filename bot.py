@@ -14,6 +14,7 @@ load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 COMMAND_PREFIX = os.getenv('COMMAND_PREFIX')
+MAINTENANCE_EMAIL = os.getenv('MAINTENANCE_EMAIL')
 
 bot = commands.Bot(command_prefix=COMMAND_PREFIX)
 
@@ -53,6 +54,7 @@ async def on_message(message):
             listening_student_year_user_list.remove(message.author)
         if message.author in listening_check_in_data_user_list:
             listening_check_in_data_user_list.remove(message.author)
+        print(f'{message.author} has finished with their check-in.')
         await message.author.create_dm()
         await message.author.dm_channel.send('Thank you!')
         return
@@ -80,6 +82,20 @@ async def on_message(message):
 # Commands
 ###########################################################
 
+@bot.command(name='author')
+async def command_hello(ctx):
+    response = f'\nHello, my name is Javen, an RA at MTU, and am the creator of this bot.\nIf you would like to use ' \
+               f'this bot for your own discord server, you can find the project at my GitHub ' \
+               f'account:\nhttps://github.com/Javen47/RA-Bot'
+    await ctx.send(response)
+
+
+@bot.command(name='repair')
+async def command_repair(ctx):
+    response = f'Do you need something fixed by maintenance?\nSend an email to: [{MAINTENANCE_EMAIL}].\nMake sure to ' \
+               f'include the location of the problem, what the problem is, when you would like it fixed. '
+    await ctx.send(response)
+
 
 @bot.command(name='hello')
 async def command_hello(ctx):
@@ -90,6 +106,12 @@ async def command_hello(ctx):
 @bot.command(name='hehwo')
 async def command_hehwo(ctx):
     response = f'hehwo {ctx.author.name}-kun!! UwU *nuzzles your neckie* (^-^)'
+    await ctx.send(response)
+
+
+@bot.command(name='uwu')
+async def command_uwu(ctx):
+    response = 'UwU *kisses and nuzzles your neckie* (^-^)'
     await ctx.send(response)
 
 
