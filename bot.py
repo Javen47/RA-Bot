@@ -7,6 +7,7 @@ import discord
 from dotenv import load_dotenv
 from discord.ext import commands
 
+from ASCII_art import ASCII_weebs, ASCII_patrick, ASCII_communism
 from check_in_config import CHECK_IN_QUESTIONS_FIRST_YEARS, CHECK_IN_QUESTIONS_RETURNERS, CHECK_IN_HEADER_MESSAGE,\
     CHECK_IN_NUMBER
 
@@ -69,6 +70,7 @@ async def on_message(message):
         if str(message.channel) == f'Direct Message with {message.author}':
             return write_check_in(message)
 
+    message.content = message.content.lower()
     await bot.process_commands(message)
 
     if str(message.channel) == f'Direct Message with {message.author}':
@@ -82,7 +84,7 @@ async def on_message(message):
 # Commands
 ###########################################################
 
-@bot.command(name='author')
+@bot.command(name='author', help='Gives info about the developer and the link to the project')
 async def command_hello(ctx):
     response = f'\nHello, my name is Javen, an RA at MTU, and am the creator of this bot.\nIf you would like to use ' \
                f'this bot for your own discord server, you can find the project at my GitHub ' \
@@ -90,7 +92,25 @@ async def command_hello(ctx):
     await ctx.send(response)
 
 
-@bot.command(name='repair')
+@bot.command(name='weebs')
+async def command_weebs(ctx):
+    response = ASCII_weebs
+    await ctx.send(response)
+
+
+@bot.command(name='motherland')
+async def command_mother_land(ctx):
+    response = ASCII_communism
+    await ctx.send(response)
+
+
+@bot.command(name='commie')
+async def command_commie(ctx):
+    response = ASCII_patrick
+    await ctx.send(response)
+
+
+@bot.command(name='repair', help='Gives info on maintenance requests')
 async def command_repair(ctx):
     response = f'Do you need something fixed by maintenance?\nSend an email to: [{MAINTENANCE_EMAIL}].\nMake sure to ' \
                f'include the location of the problem, what the problem is, when you would like it fixed. '
@@ -121,7 +141,7 @@ async def command_king(ctx):
     await ctx.send(response)
 
 
-@bot.command(name='check-in')
+@bot.command(name='check-in', help='Begins your check-in through Discord')
 async def command_check_in_ctx(ctx):
     global listening_student_year_user_list
     if ctx.message.author in listening_student_year_user_list:
@@ -162,15 +182,6 @@ async def command_check_in_message(message):
     await message.author.dm_channel.send(response)
 
 
-@bot.command(name="trivia")
-async def command_trivia(ctx):
-    response = 'pls trivia'
-    await ctx.send(response)
-    answer = randint(1, 4)
-    time.sleep(2)
-    await ctx.send(answer)
-
-
 @bot.command(name='oops')
 async def command_oops(ctx):
     response = 'OOPSIE WOOPSIE!! Uwu We made a fucky wucky!! A wittle fucko boingo!' \
@@ -178,7 +189,7 @@ async def command_oops(ctx):
     await ctx.send(response)
 
 
-@bot.command(name='list-members')
+@bot.command(name='list-members', help='Shows all the members of the server')
 async def print_server_members(ctx):
     members = '\n - '.join([member.name for member in find_guild().members])
     response = f'{GUILD}:\n - {members}'
