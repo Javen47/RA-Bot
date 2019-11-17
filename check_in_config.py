@@ -2,10 +2,14 @@
 CHECK_IN_NUMBER = 2
 
 # The message that will be displayed before the questions are asked.
-CHECK_IN_HEADER_MESSAGE = '\nHello!\nThe following questions are not a quiz, more so a guideline. Feel free to talk ' \
-                          'about ' \
-                          'whatever you what, as long as you can provide a decent idea of how you are doing. Note ' \
-                          'that your responses will be recorded until you type the command "ra done". \n\n '
+CHECK_IN_HEADER_MESSAGE = '\nHello, thank you for taking the time with this check-in!\nThe following questions are ' \
+                          'not a quiz, ' \
+                          'more so a guideline for you to let me know how you are doing. Feel free to talk about' \
+                          ' whatever is on your mind. \n-' \
+                          '\nYou can respond using separate messages. ' \
+                          'Please give context to your answers with respect to each question, ' \
+                          'and then type the command "ra done" when you are finished.\n' \
+
 
 # Check-in questions for returning students.
 CHECK_IN_QUESTIONS_FIRST_YEARS = [

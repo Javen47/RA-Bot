@@ -1,7 +1,5 @@
 # bot.py
 import os
-import time
-from random import randint
 
 import discord
 from dotenv import load_dotenv
@@ -29,7 +27,6 @@ listening_check_in_data_user_list = []
 # Events
 #########################################
 
-
 @bot.event
 async def on_ready():
     print(f'{bot.user.name} has connected to ' + GUILD + '!')
@@ -48,6 +45,8 @@ async def on_message(message):
 
     global listening_student_year_user_list
     global listening_check_in_data_user_list
+
+    message.content = message.content.lower()
 
     # disable listeners
     if message.content == 'ra done':
@@ -70,7 +69,6 @@ async def on_message(message):
         if str(message.channel) == f'Direct Message with {message.author}':
             return write_check_in(message)
 
-    message.content = message.content.lower()
     await bot.process_commands(message)
 
     if str(message.channel) == f'Direct Message with {message.author}':
@@ -135,12 +133,6 @@ async def command_uwu(ctx):
     await ctx.send(response)
 
 
-@bot.command(name='king')
-async def command_king(ctx):
-    response = 'He who possesses the most tide pods, holds the most respect. '
-    await ctx.send(response)
-
-
 @bot.command(name='check-in', help='Begins your check-in through Discord')
 async def command_check_in_ctx(ctx):
     global listening_student_year_user_list
@@ -167,13 +159,18 @@ async def command_check_in_message(message):
     if message.content == 'first-year':
         for question in CHECK_IN_QUESTIONS_FIRST_YEARS:
             response += question
-            if message.author not in listening_check_in_data_user_list:
-                listening_check_in_data_user_list.append(message.author)
+            write_check_in_question(message.author, question)
+        if message.author not in listening_check_in_data_user_list:
+            listening_check_in_data_user_list.append(message.author)
+        write_check_in_question(message.author, '\n')
+
     elif message.content == 'returner':
         for question in CHECK_IN_QUESTIONS_RETURNERS:
             response += question
-            if message.author not in listening_check_in_data_user_list:
-                listening_check_in_data_user_list.append(message.author)
+            write_check_in_question(message.author, question)
+        if message.author not in listening_check_in_data_user_list:
+            listening_check_in_data_user_list.append(message.author)
+        write_check_in_question(message.author, '\n')
     else:
         response = 'Are you a first-year or returner?'
         if message.author not in listening_student_year_user_list:
@@ -209,6 +206,12 @@ def find_guild():
 def write_check_in(message):
     file = open(f'check-ins/{CHECK_IN_NUMBER}-{message.author}.txt', 'a')
     file.write(message.content + '\n')
+    file.close()
+
+
+def write_check_in_question(author, question):
+    file = open(f'check-ins/{CHECK_IN_NUMBER}-{author}.txt', 'a')
+    file.write(question)
     file.close()
 
 
