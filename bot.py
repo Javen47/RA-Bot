@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from discord.ext import commands
 
 from ASCII_art import ASCII_weebs, ASCII_patrick, ASCII_communism
-from check_in_config import CHECK_IN_QUESTIONS_FIRST_YEARS, CHECK_IN_QUESTIONS_RETURNERS, CHECK_IN_HEADER_MESSAGE,\
+from check_in_config_3 import CHECK_IN_QUESTIONS_FIRST_YEARS, CHECK_IN_QUESTIONS_RETURNERS, CHECK_IN_HEADER_MESSAGE,\
     CHECK_IN_NUMBER
 
 load_dotenv()
@@ -157,20 +157,9 @@ async def command_check_in_message(message):
 
     response = ''
     if message.content == 'first-year':
-        for question in CHECK_IN_QUESTIONS_FIRST_YEARS:
-            response += question
-            write_check_in_question(message.author, question)
-        if message.author not in listening_check_in_data_user_list:
-            listening_check_in_data_user_list.append(message.author)
-        write_check_in_question(message.author, '\n')
-
+        response = prepare_check_in_questions(CHECK_IN_QUESTIONS_FIRST_YEARS, message.author)
     elif message.content == 'returner':
-        for question in CHECK_IN_QUESTIONS_RETURNERS:
-            response += question
-            write_check_in_question(message.author, question)
-        if message.author not in listening_check_in_data_user_list:
-            listening_check_in_data_user_list.append(message.author)
-        write_check_in_question(message.author, '\n')
+        response = prepare_check_in_questions(CHECK_IN_QUESTIONS_RETURNERS, message.author)
     else:
         response = 'Are you a first-year or returner?'
         if message.author not in listening_student_year_user_list:
@@ -213,6 +202,21 @@ def write_check_in_question(author, question):
     file = open(f'check-ins/{CHECK_IN_NUMBER}-{author}.txt', 'a')
     file.write(question)
     file.close()
+
+
+def prepare_check_in_questions(check_in_questions, message_author):
+    response = ''
+    index = 1
+    for question in check_in_questions:
+        formatted_question = str(index) + '.) ' + question + '\n'
+        response += formatted_question
+        write_check_in_question(message_author, formatted_question)
+        index = index + 1
+    if message_author not in listening_check_in_data_user_list:
+        listening_check_in_data_user_list.append(message_author)
+    write_check_in_question(message_author, '\n')
+
+    return response
 
 
 # Run Script
