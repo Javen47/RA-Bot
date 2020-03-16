@@ -7,8 +7,8 @@ CHECK_IN_HEADER_MESSAGE = '\nHello, thank you for taking the time with this chec
                           'more so a guideline for you to let me know how you are doing. Feel free to talk about' \
                           ' whatever is on your mind. \n-' \
                           '\nYou can respond using separate messages. ' \
-                          'Please give context to your answers with respect to each question, ' \
-                          'and then type the command "ra done" when you are finished.\n' \
+                          'Please give context to your answers with respect to each question.\n '
+
 
 # Check-in questions for returning students.
 CHECK_IN_QUESTIONS_FIRST_YEARS = ['How are your classes going?',

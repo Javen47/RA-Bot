@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from discord.ext import commands
 
 from ASCII_art import ASCII_weebs, ASCII_patrick, ASCII_communism
-from check_in_config_3 import CHECK_IN_QUESTIONS_FIRST_YEARS, CHECK_IN_QUESTIONS_RETURNERS, CHECK_IN_HEADER_MESSAGE,\
+from check_in_config_4 import CHECK_IN_QUESTIONS_FIRST_YEARS, CHECK_IN_QUESTIONS_RETURNERS, CHECK_IN_HEADER_MESSAGE,\
     CHECK_IN_NUMBER
 
 load_dotenv()
@@ -215,6 +215,7 @@ def prepare_check_in_questions(check_in_questions, message_author):
     if message_author not in listening_check_in_data_user_list:
         listening_check_in_data_user_list.append(message_author)
     write_check_in_question(message_author, '\n')
+    response += '\nType the command "ra done" when you are finished.'
 
     return response
 
