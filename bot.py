@@ -6,8 +6,8 @@ from dotenv import load_dotenv
 from discord.ext import commands
 
 from ASCII_art import ASCII_weebs, ASCII_patrick, ASCII_communism
-from check_in_config_4 import CHECK_IN_QUESTIONS_FIRST_YEARS, CHECK_IN_QUESTIONS_RETURNERS, CHECK_IN_HEADER_MESSAGE,\
-    CHECK_IN_NUMBER
+from check_in_config import CHECK_IN_QUESTIONS_FIRST_YEARS, CHECK_IN_QUESTIONS_RETURNERS, CHECK_IN_HEADER_MESSAGE, \
+    CHECK_IN_NUMBER, CHECK_IN_QUESTIONS_SECOND_YEARS, CHECK_IN_QUESTIONS_THIRD_YEARS, CHECK_IN_QUESTIONS_FOURTH_YEARS
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -158,10 +158,14 @@ async def command_check_in_message(message):
     response = ''
     if message.content == 'first-year':
         response = prepare_check_in_questions(CHECK_IN_QUESTIONS_FIRST_YEARS, message.author)
-    elif message.content == 'returner':
-        response = prepare_check_in_questions(CHECK_IN_QUESTIONS_RETURNERS, message.author)
+    elif message.content == 'second-year':
+        response = prepare_check_in_questions(CHECK_IN_QUESTIONS_SECOND_YEARS, message.author)
+    elif message.content == 'third-year':
+        response = prepare_check_in_questions(CHECK_IN_QUESTIONS_THIRD_YEARS, message.author)
+    elif message.content == 'fourth-year':
+        response = prepare_check_in_questions(CHECK_IN_QUESTIONS_FOURTH_YEARS, message.author)
     else:
-        response = 'Are you a first-year or returner?'
+        response = 'Are you a first-year, second-year, third-year, or fourth-year?'
         if message.author not in listening_student_year_user_list:
             listening_student_year_user_list.append(message.author)
 
